@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
+const moment = require('moment')
 const userSchema = new Schema({
   url: String,
   images: Array,
@@ -9,6 +9,7 @@ const userSchema = new Schema({
   guests: Number,
   bedroom: Number,
   bed: Number,
+  timestamp: {type: String, default: moment().format()}
 }, {strict: false});
 
 module.exports = mongoose.model('property', userSchema);

@@ -2,10 +2,7 @@ const cheerio = require('cheerio');
 const axios = require('axios');
 const mongoose = require('mongoose')
 const Property = require('./Property')
-mongoose.connect('mongodb+srv://root:root@cluster0-djmz2.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
-mongoose.connection.once('open', () => {
-  console.log('Behind the mainframe')
-});
+
 
 const property = new Property;
 const url = 'https://www.airbnb.co.uk/rooms/28299515?location=London%2C%20United%20Kingdom&toddlers=0&_set_bev_on_new_domain=1572300146_ZKC6996OiM8G0CT3&source_impression_id=p3_1572300147_bRb1KSr%2FXjuPRPDg&guests=1&adults=1'
