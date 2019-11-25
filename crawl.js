@@ -4,17 +4,16 @@ const mongoose = require('mongoose')
 const Property = require('./Property')
 
 
-const property = new Property;
 const url = 'https://www.airbnb.co.uk/rooms/28299515?location=London%2C%20United%20Kingdom&toddlers=0&_set_bev_on_new_domain=1572300146_ZKC6996OiM8G0CT3&source_impression_id=p3_1572300147_bRb1KSr%2FXjuPRPDg&guests=1&adults=1'
 let images =  new Set
 let amenities = new Set
 const meta = {amenities: {}}
+
 module.exports = async (req, res) => {
   const response = await axios.get(url);
   const $ = cheerio.load(response.data)
   $("div:contains('guests')").each((i, e) => {
     if($(e).text().match('[[0-9]+\\s+guests$')) {
-      console.log($(e).text());
       const [value, key] = $(e).text().split(' ')
       meta[key] = value
     }
@@ -65,7 +64,6 @@ module.exports = async (req, res) => {
       images = images.add(a)
     }
   })
-  console.log(Property);
   try{
     await Property.create({ ...meta, images: Array.from(images), amenities: Array.from(amenities)})
     return res.json({...meta, images: Array.from(images), amenities: Array.from(amenities), })
